@@ -6,7 +6,7 @@
 
 ##### EEC1509 Machine Learning
 
-This repo is a test suite for the skills aquired in the [Machine Learning Fundamentals and Decision Trees](https://github.com/ivanovitchm/ppgeecmachinelearning/tree/main/lessons/week_02/sources) lesson to deploy a classification model on the publicly available [MNIST](http://yann.lecun.com/exdb/mnist/) dataset.
+This repo is a test suite for the skills acquired in the [Machine Learning Fundamentals and Decision Trees](https://github.com/ivanovitchm/ppgeecmachinelearning/tree/main/lessons/week_02/sources) lesson to deploy a classification model on the publicly available [MNIST](http://yann.lecun.com/exdb/mnist/) dataset.
 
 The main goal of this work is to deploy a model using the [FastAPI](https://fastapi.tiangolo.com/) module, creating an API and tests. The API tests are going to be incorporated into a CI/CD framework using GitHub Actions. The live API will be deployed using [Heroku](https://www.heroku.com/). [Weights & Biases](https://wandb.ai/) will be used to manage and tracking all artifacts.
 
@@ -64,7 +64,7 @@ clf = DecisionTreeClassifier(max_depth=10, random_state=42)
 clf.fit(x_train, y_train)
 ```
 
-In order to follow the performance of machine learning experiments, the project marked certains stage outputs of the data pipeline as metrics. The metrics adopted here are: accuracy, f1, precision, recall. The results for the trained model are shown bellow.
+In order to follow the performance of machine learning experiments, the project marked certain stage outputs of the data pipeline as metrics. The metrics adopted here are: accuracy, f1, precision, recall. The results for the trained model are shown bellow.
 
 |              | Precision | Recall | F1-Score | Samples |
 |:------------:|:---------:|:------:|:--------:|:-------:|
@@ -326,7 +326,7 @@ git push heroku main
 12. Check the remote files run:
 
 ```bash
-heroku run bash --app high-income-app
+heroku run bash --app proj-mnist
 ```
 
 13. If all previous steps were done with successful you will see the message below after open: ```https://proj-mnist.herokuapp.com/```.
