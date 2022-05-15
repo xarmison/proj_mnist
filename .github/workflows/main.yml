@@ -20,12 +20,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Setup Python
+        uses: actions/setup-python@v3.0.0
+        with:
+          # Version range or exact version of a Python version to use, using SemVer's version range syntax.
+          python-version: 3.8
+      
+      - name: Install dependences
+        run: pip install --upgrade pip && pip install -r requirements.txt
+          
+      - name: Login in wandb
+        run: 
+          wandb login ${{ secrets.WANDB_KEY }}
+                                        
+      - name: Testing API
+        run:
+          pytest source -vv -s --disable-pytest-warnings
