@@ -8,3 +8,4 @@ uvicorn
 fastapi
 pydantic
 wandb
+Pillow
