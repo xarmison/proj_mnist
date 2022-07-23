@@ -10,3 +10,4 @@ pydantic
 wandb
 Pillow
 dill
+tensorflow
