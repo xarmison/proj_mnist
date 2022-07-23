@@ -6,9 +6,14 @@ canvas.freeDrawingBrush.color = "#ffffff";
 canvas.backgroundColor = "#000000";
 canvas.renderAll();
 
+// Retrieve prediction model to be used from selector
+let clf_path = $('#clf_model').val();
+$(document.body).on('change', '#clf_model', _ => {
+    clf_path = $('#clf_model').val();
+});
 
 // Clear button callback
-$("#clear-canvas").click(() => {
+$("#clear-canvas").click(_ => {
 	canvas.clear();
 	canvas.backgroundColor = "#000000";
 	canvas.renderAll();
@@ -16,9 +21,13 @@ $("#clear-canvas").click(() => {
 	$("#status").removeClass();
 });
 
-
 // Predict button callback
-$("#predict").click(() => {
+$("#predict").click(_ => {
+
+	if (clf_path == "Choose the classification model" ) {
+		alert('Choose a classification model first!');
+		return;
+	}
 
 	// Change status indicator
 	$("#status").removeClass().toggleClass("fa fa-spinner fa-spin");
@@ -28,7 +37,7 @@ $("#predict").click(() => {
 	let drawing_data = canvas.toDataURLWithMultiplier('png', fac);
 	
 	// Post url to python script
-	let jq = $.post(`/predict/?drawing_data=${drawing_data}`)
+	let jq = $.post(`/${clf_path}/?drawing_data=${drawing_data}`)
 		.done( (json) => {
 			if (json.result) {
 				$("#status").removeClass().toggleClass("fa fa-check");
@@ -47,12 +56,13 @@ $("#predict").click(() => {
 
 });
 
-// Iniitialize d3 bar chart
+// Decision Tree Predictions Chart
 $('#svg-chart').hide();
+
 let labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 let zeros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-let margin = { top: 0, right: 0, bottom: 20, left: 0 },
+let margin = { top: 0, right: 0, bottom: 50, left: 0 },
 	width = 360 - margin.left - margin.right,
 	height = 180 - margin.top - margin.bottom;
 
@@ -60,8 +70,7 @@ let svg = d3.select("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
-	.attr("transform",
-		"translate(" + margin.left + "," + margin.top + ")");
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 let x = d3.scale.ordinal()
 	.rangeRoundBands([0, width], .1)
